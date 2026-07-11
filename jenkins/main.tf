@@ -2,6 +2,7 @@ variable "ami_id" {}
 variable "instance_type" {}
 variable "tag_name" {}
 variable "key_name" {}
+variable "public_key_path" {}
 variable "subnet_id" {}
 variable "sg_for_jenkins" {}
 variable "enable_public_ip_address" {}
@@ -40,5 +41,5 @@ resource "aws_instance" "jenkins_ec2_instance_ip" {
 
 resource "aws_key_pair" "jenkins_ec2_instance_key_name" {
   key_name   = "keypair-vpc1"
-  # key_name = var.key_name
+  public_key = file(var.public_key_path)
 }
