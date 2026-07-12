@@ -33,10 +33,6 @@ variable "key_name" {
   description = "DevOps Project 1 Public key for EC2 instance"
 }
 
-variable "public_key_path" {
-  type        = string
-  description = "Path to the public key file for EC2 key pair"
-}
 
 variable "ec2_ami_id" {
   type        = string

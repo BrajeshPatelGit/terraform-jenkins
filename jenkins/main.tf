@@ -2,7 +2,7 @@ variable "ami_id" {}
 variable "instance_type" {}
 variable "tag_name" {}
 variable "key_name" {}
-variable "public_key_path" {}
+
 variable "subnet_id" {}
 variable "sg_for_jenkins" {}
 variable "enable_public_ip_address" {}
@@ -39,7 +39,18 @@ resource "aws_instance" "jenkins_ec2_instance_ip" {
   }
 }
 
+resource "tls_private_key" "keypair" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "aws_key_pair" "jenkins_ec2_instance_key_name" {
   key_name   = "keypair-vpc1"
-  public_key = file(var.public_key_path)
+  public_key = tls_private_key.keypair.public_key_openssh
+}
+
+resource "local_file" "private_key" {
+  content         = tls_private_key.keypair.private_key_pem
+  filename        = pathexpand("~/.ssh/keypair-vpc1")
+  file_permission = "0600"
 }

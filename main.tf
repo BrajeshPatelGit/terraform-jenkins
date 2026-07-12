@@ -20,7 +20,6 @@ module "jenkins" {
   instance_type             = "t2.medium"
   tag_name                  = "Jenkins:Ubuntu Linux EC2"
   key_name                  = var.key_name
-  public_key_path           = var.public_key_path
   subnet_id                 = tolist(module.networking.dev_proj_1_public_subnets)[0]
   sg_for_jenkins            = [module.security_group.sg_ec2_sg_ssh_http_id, module.security_group.sg_ec2_jenkins_port_8080]
   enable_public_ip_address  = true
